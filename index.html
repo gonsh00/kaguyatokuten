@@ -19,6 +19,7 @@
       --btn:#20243a;
       --btn-border:#2b3150;
       --badge:#2d3356;
+      --overlay-bg: rgba(20,24,43,.55);
     }
     *{box-sizing:border-box}
     html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family: system-ui, -apple-system, Segoe UI, Roboto, "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "メイリオ", Meiryo, sans-serif}
@@ -26,7 +27,17 @@
 
     .wrap{max-width:720px;margin:0 auto;padding:16px 16px 96px}
 
-    header{display:flex;flex-direction:column;gap:6px;margin:8px 0 14px}
+    header{position:relative;display:flex;flex-direction:column;gap:0;margin:8px -8px 14px;overflow:hidden}
+    header .logo{display:block;width:100%;height:128px;object-fit:cover;object-position:center}
+    /* Overlay chips on header image */
+    header .title, header .brand, header .theme{
+      position:absolute;z-index:2;border:1px solid var(--btn-border);
+      background:var(--overlay-bg);backdrop-filter: blur(6px);
+      box-shadow: 0 6px 16px rgba(0,0,0,.22);
+    }
+    header .title{left:12px;bottom:40px;padding:6px 10px;border-radius:10px}
+    header .brand{left:12px;bottom:10px;padding:4px 8px;border-radius:8px}
+    header .theme{top:8px;right:8px}
     .title{font-size:20px;font-weight:800}
     .brand{font-size:12px;color:var(--muted)}
 
@@ -134,6 +145,7 @@
       --btn:#f1f3fb;
       --btn-border:#e1e5f2;
       --badge:#e9ecf8;
+      --overlay-bg: rgba(255,255,255,.65);
     }
   </style>
 </head>
@@ -158,6 +170,7 @@
 
   <div id="app" class="wrap" style="display:none">
     <header>
+      <img id="headerLogo" class="logo" src="images/IMG_header2.jpg" alt="サイトロゴ" />
       <button id="themeToggle" class="theme" type="button" aria-label="テーマ切替">🌙 ダーク</button>
       <div class="title">かぐや様は設定差をバラされたい</div>
       <div class="brand">ごん氏オリジナル設定判別ツール</div>
