@@ -44,7 +44,7 @@
     .card{background:var(--card);border:1px solid var(--btn-border);border-radius:14px;padding:14px}
 
     .result{
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      display:none;
       text-align:center;gap:6px;padding:18px;border-radius:12px;
       background:linear-gradient(160deg, #1b1f36 0%, #14182b 100%);
       border:1px solid var(--btn-border);
@@ -95,13 +95,16 @@
     }
     .controls .cbtn.reset{background:#2a1f2a}
 
-    .inputs{display:grid;grid-template-columns:repeat(3, 1fr);gap:10px;margin:8px 0}
+    .inputs{display:grid;grid-template-columns:1fr;gap:10px;margin:8px 0}
     .input{display:flex;flex-direction:column;gap:6px}
     .input label{font-size:12px;color:var(--muted)}
     .input input{
       background:var(--btn);color:var(--text);
       border:1px solid var(--btn-border);
       padding:12px;border-radius:10px;font-size:16px;
+    }
+    @media (min-width: 640px){
+      .inputs{grid-template-columns:repeat(3, 1fr)}
     }
 
     .judge{
@@ -116,6 +119,7 @@
     .foot{max-width:720px;margin:0 auto;padding:10px 16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
     .foot .chip{background:var(--card);border:1px solid var(--btn-border);border-radius:999px;padding:6px 10px;font-size:12px;color:var(--muted)}
     .foot .chip strong{color:var(--text)}
+    .result-footer{max-width:720px;margin:6px auto 0;padding:8px 16px;text-align:center}
 
     /* Password Gate */
     .gate{position:fixed;inset:0;background:radial-gradient(1200px 400px at 50% -20%, #273056, #0f1220 60%)}
@@ -218,6 +222,10 @@
       <div class="chip">累積得点 y: <strong id="yValFooter">0.0</strong></div>
       <div class="chip">x: <strong id="xValFooter">0</strong></div>
     </div>
+    <div class="result-footer">
+      <div class="result-label">判定結果</div>
+      <div id="resultValueFooter" class="result-value">未判定</div>
+    </div>
   </footer>
 
   <script>
@@ -256,6 +264,7 @@
     const xValFooter = document.getElementById('xValFooter');
     const eventsGrid = document.getElementById('eventsGrid');
     const resultValue = document.getElementById('resultValue');
+    const resultValueFooter = document.getElementById('resultValueFooter');
 
     const bbInput = document.getElementById('bbInput');
     const rbInput = document.getElementById('rbInput');
@@ -327,6 +336,10 @@
       }
       resultValue.className = 'result-value ' + cls;
       resultValue.textContent = label;
+      if (resultValueFooter){
+        resultValueFooter.className = 'result-value ' + cls;
+        resultValueFooter.textContent = label;
+      }
     }
 
     function addEvent(key, score){
@@ -368,6 +381,10 @@
       gameInput.value = '';
       resultValue.className = 'result-value';
       resultValue.textContent = '未判定';
+      if (resultValueFooter){
+        resultValueFooter.className = 'result-value';
+        resultValueFooter.textContent = '未判定';
+      }
       updateTotalsUI();
       vibrate(6);
     }
